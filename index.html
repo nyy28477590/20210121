@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="style.css">
+  <title>財政部載具抽獎活動網站</title>
+  <meta name="description" content="請輸入正確資料，祝您抽大獎！">
+</head>
+
+<body>
+
+    <div class='container'>
+        <h1>財政部載具抽獎</h1>
+      <form class="form-horizontal" novalidate="">
+        <div class="control-group">
+          <label class="control-label" >手機號碼</label>
+          <div class="controls">
+            <input type="text" pattern="09\d{2}\-?\d{3}\-?\d{3}" id="phoneNumber">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">載具號碼</label>
+          <div class="controls">
+            <input type="text" id="invoiceNumber">
+            <p class="help-block">請輸入 / 開頭的手機條碼</p>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">電子郵件</label>
+          <div class="controls">
+            <input type="email" id="email">
+            <p class="help-block"></p>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="terms-and-conditions">請確認</label>
+          <div class="controls">
+            <label class="checkbox">
+              <input type="checkbox" id="terms-and-conditions" name="terms-and-conditions" required="" data-validation-required-message="You must agree to the terms and conditions">
+              我了解 <a href="https://www.einvoice.nat.gov.tw/">載具發票使用規範</a>
+            </label>
+            <p class="help-block"></p>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" id="send" onclick="please()">抽獎去</button><br>
+          <script language="javascript">
+            function please(){
+                alert("兩年快樂，請原諒我!")
+                window.open("/prize.html")
+            }
+          </script>
+        </div>
+        </form>
+      </div>
+
+    </body>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script>
+            $(function() {
+                $('#send').on('click', function() {
+                    var phone = $('#phoneNumber').val() || '未填寫';
+
+                    var invoiceNumber = $('#invoiceNumber').val() || '未填寫';
+
+                    var email = $('#email').val() || '未填寫';
+
+                    var data = {
+                        'entry.1054161825': phone,
+                        'entry.1572650529': invoiceNumber,
+                        'entry.2068736141': email
+                    };
+                    $.ajax({
+                        type: 'POST',
+                        url: 'https://docs.google.com/forms/u/0/d/e/1FAIpQLScH5c0ZAf7BkMmtxjA7nBsTi7Qh1DT_mZYoEHKoCoS0a-0GEw/formResponse',
+                        data: data,
+                        contentType: 'application/json',
+                        dataType: 'jsonp',
+                        complete: function() {
+                            alert('原諒我好不好');
+                            //window.location.href="/prize.html" 
+                        }
+                    });
+                });
+            });
+        </script>
+</html>
